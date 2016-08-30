@@ -1,5 +1,6 @@
 package com.revature.data.impl;
 
+import java.io.File;
 import java.util.List;
 
 import com.revature.beans.Blog;
@@ -16,6 +17,10 @@ public class DataServiceImpl implements DataService{
 
 	public void setDao(DAO dao) {
 		this.dao = dao;
+	}
+	
+	public String uploadFile(String folderPath, String fileName, File file) {
+		return dao.uploadFile(folderPath, fileName, file);
 	}
 	
 	// Push

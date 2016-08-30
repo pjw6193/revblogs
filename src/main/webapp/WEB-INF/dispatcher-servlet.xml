@@ -14,5 +14,10 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="52428800" /> <!-- 50MB -->
+	</bean>
+	
 	<import resource="spring-beans.xml"/>
 </beans>

@@ -1,6 +1,9 @@
 package com.revature.service.impl;
 
+import java.io.File;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.beans.Blog;
 import com.revature.beans.Evidence;
@@ -10,6 +13,7 @@ import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.ServiceLocator;
+import com.revature.service.TemporaryFile;
 
 public class BusinessDelegateImpl implements BusinessDelegate{
 
@@ -21,6 +25,25 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	}
 	public void setServiceLocator(ServiceLocator serviceLocator) {
 		this.serviceLocator = serviceLocator;
+	}
+	
+	public String uploadFile(String folderPath, String fileName, MultipartFile file) {
+		String result = null;
+		TemporaryFile temporaryFile = TemporaryFile.make(file);
+		if ( temporaryFile != null ) {
+			System.out.println("Successfully created temporary file!");
+			File compatibleFile = temporaryFile.getTemporaryFile();
+			result = dataService.uploadFile(folderPath, fileName, compatibleFile);
+			temporaryFile.destroy();
+		} else {
+			System.out.println("FAILED TO CREATE TEMPORARY FILE :(");
+		}
+		
+		/// TEMP ///
+		System.out.println("File is now available at: " + result);
+		////////////
+		
+		return result;
 	}
 	
 	// Push
