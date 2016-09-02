@@ -326,14 +326,46 @@ public class Population {
 			
 			switch(i){
 			
-				case 0: props[i][0] = Crypt.encrypt(props[i][0], props[1][0], props[2][0]); break;
-				case 1: props[i][0] = Crypt.encrypt(props[i][0], props[2][0], props[3][0]); break;
-				case 2: props[i][0] = Crypt.encrypt(props[i][0], props[3][0], props[4][0]); break;
-				case 3: props[i][0] = Crypt.encrypt(props[i][0], props[4][0], props[5][0]); break;
-				case 4: props[i][0] = Crypt.encrypt(props[i][0], props[5][0], props[6][0]); break;
-				case 5: props[i][0] = Crypt.encrypt(props[i][0], props[6][0], props[7][0]); break;
-				case 6: props[i][0] = Crypt.encrypt(props[i][0], props[7][0], props[0][0]); break;
-				case 7: props[i][0] = Crypt.encrypt(props[i][0], props[0][0], props[1][0]); break;
+				case 0: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", 
+												"pneumonoultramicroscopicsilicovolcanoconiosis"); 
+					break;
+				case 1: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", 
+												"Pseudopseudohypoparathyroidism"); 
+					break;
+				case 2: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", 
+												"Floccinaucinihilipilification"); 
+					break;
+				case 3: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", 
+												"Antidisestablishmentarianism"); 
+					break;
+				case 4: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", 
+												"supercalifragilisticexpialidocious"); 
+					break;
+				case 5: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", 
+												"Incomprehensibilities"); 
+					break;
+				case 6: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", 
+												"honorificabilitudinitatibus"); 
+					break;
+				case 7: 
+					props[i][0] = Crypt.encrypt(props[i][0], 
+												"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", 
+												"sesquipedalianism"); 
+					break;
 			}
 		}
 

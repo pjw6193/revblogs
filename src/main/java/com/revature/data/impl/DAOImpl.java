@@ -49,8 +49,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void insertRecord(Object obj){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 
 		session.save(obj);
 	}
@@ -58,8 +58,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void editRecord(Object obj){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		session.update(obj);
 	}
@@ -68,8 +68,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public User getUsers(String username){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(User.class).add(Restrictions.eq("username", username));
 		return (User)criteria.uniqueResult();
@@ -78,8 +78,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<User> getUsers(){
 			
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(User.class);
 		return (List<User>)criteria.list();
@@ -88,8 +88,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<Blog> getBlogs(){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(Blog.class);
 		return (List<Blog>)criteria.list();
@@ -98,8 +98,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<Tags> getTags(){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(Tags.class);
 		return (List<Tags>)criteria.list();
@@ -108,8 +108,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<UserRoles> getRoles(){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(UserRoles.class);
 		return (List<UserRoles>)criteria.list();
@@ -118,8 +118,8 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<Evidence> getEvidence(){
 
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(Evidence.class);
 		return (List<Evidence>)criteria.list();
@@ -128,36 +128,76 @@ public class DAOImpl implements DAO{
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String getProperty(PropertyType type){
 		
-		Session session = sessionFactory.getCurrentSession();
-		setSession(session);
+		Session ses = sessionFactory.getCurrentSession();
+		setSession(ses);
 		
 		Criteria criteria = session.createCriteria(ApplicationProperties.class);
 		ApplicationProperties props = (ApplicationProperties) criteria.uniqueResult();
 
+		String[][] keys = new String[][]{
+			
+			{"CZmTgoznKnJocTkGuFFURvZjUDuVvBhoETorfnzPOfqymleBbOOHfqPCSSty", "pneumonoultramicroscopicsilicovolcanoconiosis"},
+			{"GSXWzGGiiDBvlYxTNddabeUOsSPLHoYnibqBEAtRrSDnZPrACvUjBMGxcoBZ", "Pseudopseudohypoparathyroidism"},
+			{"cCpQZBETFySMWXeMTQDQomszbDhIgTCWNfjzrBQjwyzcMIrNeFGZggWpzSdQ", "Floccinaucinihilipilification"},
+			{"UjVheJqfrHXEuciEaIEibjRYjaxGEJFPrLcZNuugxZQmpHdeoBJRVLFeEDfc", "Antidisestablishmentarianism"},
+			{"BhXCFkEevSCHlJMCJyvqhyOiNnKDaoxwcdWrNGxUZySIJspidexHSROVXDAh", "supercalifragilisticexpialidocious"},
+			{"RnhHIlwovrapdVzySrOIfmMZPOPOEACAsVScsBIflnsIphgireiIRKkmINdr", "Incomprehensibilities"},
+			{"momGKfMimvxYGNKmZCzdXNSBGpvQngTbtvxETwjePoZWyirhkyAWMhkFzxQI", "honorificabilitudinitatibus"},
+			{"TuJgzrAAFblqmFUfDvRyNHOtKQjVpxESLwrXecnGMSrSEJyhfkgPGvTccbPJ", "sesquipedalianism"}
+		};
+		
+		String value;
+		
 		switch(type){
 		
 			case COMPANY:
-			
-				props.setCompany(Crypt.decrypt(props.getCompany(), props.getApp(), props.getS3()));
 				
-				System.out.println("Company is = " + props.getCompany());
-				
-				return props.getCompany();
+				value = props.getCompany();
+				value = Crypt.decrypt(value, keys[0][0], keys[0][1]);
+				return value;
 				
 			case APP:
-				break;
+
+				value = props.getApp();
+				value = Crypt.decrypt(value, keys[1][0], keys[1][1]);
+				return value;
+				
 			case S3:
-				break;
+
+				value = props.getS3();
+				value = Crypt.decrypt(value, keys[2][0], keys[2][1]);
+				return value;
+				
 			case SERVER:
-				break;
+
+				value = props.getServer();
+				value = Crypt.decrypt(value, keys[3][0], keys[3][1]);
+				return value;
+				
 			case JENKINS:
-				break;
+
+				value = props.getJenkins();
+				value = Crypt.decrypt(value, keys[4][0], keys[4][1]);
+				return value;
+				
 			case SONARQUBE:
-				break;
+
+				value = props.getSonarqube();
+				value = Crypt.decrypt(value, keys[5][0], keys[5][1]);
+				return value;
+				
 			case K:
-				break;
+
+				value = props.getK();
+				value = Crypt.decrypt(value, keys[6][0], keys[6][1]);
+				return value;
+				
 			case V:
-				break;
+
+				value = props.getV();
+				value = Crypt.decrypt(value, keys[7][0], keys[7][1]);
+				return value;
+				
 		}
 		
 		return null;

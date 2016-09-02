@@ -79,11 +79,7 @@ public class BaseController {
 	@RequestMapping(value="/populate", method=RequestMethod.GET)
 	public String populate(HttpServletRequest req, HttpServletResponse resp){
 	
-		String props = businessDelegate.requestProperty(PropertyType.COMPANY);
-		
-		System.out.println("Company is = " + props);
-		
-		return "login";
+		return "loginPage";
 	}
 	@RequestMapping(value="/create-blog", method=RequestMethod.GET)
 	public String createBlog(HttpServletRequest req, HttpServletResponse resp){
@@ -139,12 +135,12 @@ public class BaseController {
 		blog.setPublishDate(new Date());
 		
 		businessDelegate.putRecord(blog);
-		
 		HtmlWriter htmlWriter;
 		try {
 			InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream("template.html");
 			htmlWriter = new HtmlWriter(blog, blog.getAuthor(), templateStream);
 			TemporaryFile blogTempFile = htmlWriter.render();
+			blogTempFile.destroy();
 			req.setAttribute("blog", blog);
 		} catch (FileNotFoundException e) {
 		} catch (IOException e1) {
