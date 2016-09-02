@@ -50,7 +50,7 @@ public class JetS3Impl implements JetS3{
 	 * @return the URL where the file was uploaded if successful, null otherwise
 	 */
 	public String uploadEvidence(String fileName, MultipartFile file) {
-		return uploadFile("content/evidence", fileName, file);
+		return uploadFile("content/evidence/", fileName, file);
 	}
 	
 	/**
@@ -106,6 +106,7 @@ public class JetS3Impl implements JetS3{
 			s3Obj.setDataInputStream(fis);
 			s3Obj.setContentLength(file.length());
 			s3Obj.setAcl(acl);
+			s3Obj.setContentType("text/html");
 			s3.putObject(bucket, s3Obj);
 			
 			// TODO: Replace with something less hardcoded
