@@ -26,7 +26,7 @@
 	<div>
 		<div >
 			<h3>Update Password</h3> <br />
-			<form>
+			<form action="updatePassword.do" method="post">
 			<table>
 			<tr>
 				<td>
@@ -140,7 +140,7 @@
 	<div>
 		<div >
 			<h3>Update Password</h3> <br />
-			<form>
+			<form action="updatePassword.do" method="post">
 			<table>
 			<tr>
 				<td>
@@ -216,14 +216,12 @@ $(document).ready(function(){
 		
 		if(newPass !== conPass){
 			
-			$("#changePassword").attr("disabled","true");
 			$("#confirmMessage").text("Passwords do not match.");
 			$("#confirmMessage").css("color", "red");
 		}
 		
 		else{
 			
-			$("#changePassword").attr("disabled","false");
 			$("#confirmMessage").text("");
 			$("#confirmMessage").css("color", "black");
 			

@@ -33,6 +33,7 @@ import com.revature.service.BusinessDelegate;
 import com.revature.service.HtmlWriter;
 import com.revature.service.JetS3;
 import com.revature.service.Logging;
+import com.revature.service.impl.Crypt;
 import com.revature.service.impl.JetS3Impl;
 
 @Controller
@@ -107,11 +108,14 @@ public class PostController {
 			HttpServletRequest req, HttpServletResponse resp){
 		
 		User loggedIn = (User) req.getSession().getAttribute("user");
-		loggedIn.setPassword(password);
-		if(loggedIn.isNewUser() == true){
-			loggedIn.setNewUser(false);
+		User user = businessDelegate.requestUsers(loggedIn.getEmail());
+		user.setPassword(Crypt.encrypt(password, user.getEmail(), user.getFullname()));
+		
+		if(user.isNewUser() == true){
+			user.setNewUser(false);
 		}
-		businessDelegate.updateRecord(loggedIn);
+		businessDelegate.updateRecord(user);
+		req.getSession().setAttribute("user", user);
 		return "profile";
 		
 	}
