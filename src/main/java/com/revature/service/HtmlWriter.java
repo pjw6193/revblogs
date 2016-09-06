@@ -8,8 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import com.revature.app.TemporaryFile;
 import com.revature.beans.Blog;
@@ -66,6 +67,7 @@ public class HtmlWriter {
 				blogWriter.write(author.getFirstName()+" "+author.getLastName());
 			if (line.contains("author-desc"))
 				blogWriter.write(author.getDescription());
+
 			if (line.contains("comments-facebook"))
 				blogWriter.write("<div>"+
 				"<div class='fb-comments' data-href='http://blogs.pjw6193.tech/content/pages/"+fileName+"' data-numposts='3'></div>"+
@@ -89,6 +91,14 @@ public class HtmlWriter {
 			}
 			if(line.contains("invisible-url")){
 				blogWriter.write("<input type='text' id='invisibleurl' value='"+fileName+"'/>");
+			}
+			if (line.contains("post-references-body")) {
+				Map<Integer, String> references = blog.getReferences();
+				for ( Integer key : references.keySet() ) {
+					blogWriter.write("<div class=\"post-reference-item\">"
+							+ "[" + key.toString() + "] - "
+							+ references.get(key) + "</div>");
+				}
 			}
 		}
 		blogWriter.close();

@@ -63,6 +63,15 @@
           <div class="post-body">
           	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
           </div>
+          <div class="post-references-heading">
+          </div>
+          <div class="post-references-body">
+            <c:forEach var="element" items="${blog.references}">
+              <div class="post-reference-item">
+              	<c:out value="[${element.key}] - ${element.value}"></c:out>
+              </div>
+            </c:forEach>
+          </div>
           <div class="post-tags">
           </div>
           <form:form action="edit.do">

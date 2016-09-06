@@ -63,6 +63,10 @@
           </div>
           <div class="post-body">
           </div>
+          <div class="post-references-heading">
+          </div>
+          <div class="post-references-body">
+          </div>
           <form action="/edit">
           	<button type="submit">Edit</button>
           </form>

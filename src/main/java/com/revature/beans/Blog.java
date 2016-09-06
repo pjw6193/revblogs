@@ -1,6 +1,7 @@
 package com.revature.beans;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -59,6 +60,7 @@ public class Blog {
 	@Lob
 	private String staticHTML;
 	
+	private transient Map<Integer, String> references;
 	private transient String blogTagsString;
 	
 	//----------------------------------
@@ -168,6 +170,12 @@ public class Blog {
 	}
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+	public Map<Integer, String> getReferences() {
+		return references;
+	}
+	public void setReferences(Map<Integer, String> references) {
+		this.references = references;
 	}
 	public String getBlogTagsString() {
 		return blogTagsString;
