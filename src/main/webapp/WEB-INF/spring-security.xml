@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 <!-- CHECKS FOR THE USER'S ROLE, CALLED FROM SECURITY:JDBC-USER-SERVICE -->
-	<bean id="roleHandler" class="com.revature.secure.AuthSuccessHandler" ></bean>
+	<bean id="roleHandler" class="com.revature.secure.AuthSuccessHandler" />
 	
 <!-- HTTP SECURITY FOR CONTROLLING ACCESS BASED ON ROLL -->	
 	<security:http auto-config="true" use-expressions="true">
@@ -14,7 +14,10 @@
 		<security:intercept-url pattern="/create-blog/**" access="hasAnyRole('CONTRIBUTOR','ADMIN')"/>
 		<security:intercept-url pattern="/makeClientAccount/**" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/contributor**" access="hasRole('CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/preview-blog**" access="hasAnyRole('CONTRIBUTOR','ADMIN')" />
 		<security:intercept-url pattern="/profile/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/password/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
+		<security:intercept-url pattern="/success/**" access="hasAnyRole('ADMIN','CONTRIBUTOR')"/>
 		<security:intercept-url pattern="/resources/**" access="permitAll" />
 
 <!-- FORM-LOGIN SECURITY FOR THE LOGIN PAGE -->		
@@ -26,19 +29,21 @@
 			authentication-success-handler-ref="roleHandler"
 			authentication-failure-url="/loginPage?auth=fail" />
 			
-		<security:logout logout-url="/go-logout" logout-success-url="/loginPage?auth=logout" />
+		<security:logout logout-url="/go-logout" logout-success-url="/loginPage?auth=logout"
+			invalidate-session="true"  />
 	</security:http>
 	
 <!-- AUTHENTICATION SECURITY FOR CALLING THE DATABASE AND QUERYING -->
 	<security:authentication-manager>
 		<security:authentication-provider>
+			<security:password-encoder ref="cryptImpl" />
 			<security:jdbc-user-service 
 			id="userService" data-source-ref="dataSource"
-			users-by-username-query="SELECT USER_USERNAME, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE USER_USERNAME=?"
-			authorities-by-username-query="SELECT U.USER_USERNAME, R.ROLE_ROLE 
+			users-by-username-query="SELECT USER_EMAIL, USER_PASSWORD, USER_ACTIVE FROM PP_USER WHERE LOWER(USER_EMAIL)=LOWER(?)"
+			authorities-by-username-query="SELECT U.USER_EMAIL, R.ROLE_ROLE 
 											FROM PP_USER U, PP_ROLES R
 											WHERE U.USER_ROLE = R.ROLE_ID
-											AND U.USER_USERNAME=?"	
+											AND LOWER(U.USER_EMAIL)=LOWER(?)"	
 			/>
 		</security:authentication-provider>
 	</security:authentication-manager>

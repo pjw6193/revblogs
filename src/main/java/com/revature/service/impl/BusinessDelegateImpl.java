@@ -15,9 +15,9 @@ import com.revature.beans.User;
 import com.revature.beans.UserRoles;
 import com.revature.data.DataService;
 import com.revature.data.impl.PaginatedResultList;
+import com.revature.data.impl.PropertyType;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.dto.BlogPostDTO;
-import com.revature.data.impl.PropertyType;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.JetS3;
 import com.revature.service.ServiceLocator;
@@ -25,8 +25,12 @@ import com.revature.service.ServiceLocator;
 @Service
 public class BusinessDelegateImpl implements BusinessDelegate{
 
+	/*
+	 * 	Attributes && Getters/Setters
+	 * 
+	 */
 	private DataService dataService;
-	private JetS3 jetS3 = new JetS3Impl();
+	private JetS3 jetS3 = new JetS3Impl(this);
 	
 	public void setDataService(DataService dataService) {
 		this.dataService = dataService;
@@ -36,7 +40,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public Session requestSession() {
 		return dataService.grabSession();
 	}
-	
+
 	/**
 	 * Attempts to upload a resource (such as a CSS or JS file) to the S3 server
 	 * @param fileName the destination name of the file, a valid extension should be included
@@ -66,7 +70,10 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		return jetS3.uploadEvidence(fileName, file);
 	}
 	
-	// Push
+	/*
+	 *  Database Altering Methods
+	 */
+	
 	public void putRecord(Object obj){
 		dataService.makeRecord(obj);
 	}
@@ -74,9 +81,15 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		dataService.changeRecord(obj);
 	}
 	
-	// Pull
+	/*
+	 *  Database Query Methods
+	 */
+	
 	public User requestUsers(String username){
 		return dataService.grabUsers(username);
+	}
+	public UserRoles requestRoles(String role) {
+		return dataService.grabRoles(role);
 	}
 	public String requestProperty(PropertyType type){
 		return dataService.grabProperty(type);
@@ -97,6 +110,11 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public List<Evidence> requestEvidence(){
 		return dataService.grabEvidence();
 	}
+	
+	
+	//-------------------------------------------------------------------------------------------------
+	// Pagination
+	
 	public BlogPostCollectionDTO requestBlogPosts(int page, int perPage) throws IllegalArgumentException {
 		
 		if (page < 1 || perPage < 1) {

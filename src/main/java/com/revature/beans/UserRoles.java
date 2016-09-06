@@ -15,6 +15,8 @@ public class UserRoles {
 	// Attributes
 	@Id
 	@Column(name="ROLE_ID", nullable=false)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="roleSequence")
+	@SequenceGenerator(name="roleSequence",sequenceName="ROLE_SEQUENCE",initialValue=1,allocationSize=1)
 	private int userRoleId;
 	
 	@Column(name="ROLE_ROLE", unique=true, nullable=false)
@@ -28,9 +30,8 @@ public class UserRoles {
 		super();
 	}
 		
-	public UserRoles(int id, String role) {
+	public UserRoles(String role) {
 		super();
-		this.userRoleId = id;
 		this.role = role;
 	}
 	

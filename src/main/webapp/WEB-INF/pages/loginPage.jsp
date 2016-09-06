@@ -8,6 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -20,39 +24,40 @@
 <div class="container page-content">
 	<c:if test="${'fail' eq param.auth}">
 		<div>
-              <h3>Failed to login. Please try again.</h3>
+              <h3 id="failLogin">Failed to login. Please try again.</h3>
         </div>
 	</c:if>
 	<c:if test="${'logout' eq param.auth}">
 		<div>
-			<h3>You have successfully signed out.</h3>
+			<h3 id="logoutSuccess">You have successfully signed out.</h3>
 		</div>
 	</c:if>
-	<img src="${pageContext.servletContext.contextPath}/resources/images/RevLogo.jpg" alt="Revature Logo" width="318" height="72"/>
 	<br><br>
 	<div id="login">
-	<form name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
+	<form id="form" name="loginForm" action="${pageContext.request.contextPath}/login" onsubmit="return validateForm()" method="post">
 	<table>	
 		<tr>
 			<td>
-				Username:
+				Email&nbsp;&nbsp;&nbsp;
 			</td> 
 			<td>
-				<input type="text" id="userAuth" name="username"/><span id="userMsg"></span><br/>
+				<input type="text" id="userAuth" name="username" class="form-control"/><span id="userMsg"></span><br/>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Password:
+				Password&nbsp;&nbsp;&nbsp;
 			</td>
 			<td> 
-				<input type="password" id="passAuth" name="password"/><span id="passMsg"></span>
+				<input type="password" id="passAuth" name="password" class="form-control"/><span id="passMsg"></span>
 			</td>
 		</tr>
+		<tr><td colspan=2><hr/></td></tr>
 		<tr>
-			<td colspan="2"><input type="submit" name="submit" value="Submit"/></td>
-			
-			
+			<td></td>
+			<td><button id="send" class="btn btn-primary form-control">Login</button></td>
+		</tr>
+		<tr><td colspan=2><br/><br/></td></tr>
 	</table>	
 	</form>
 	</div>
@@ -60,12 +65,30 @@
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script type="text/javascript">
+$(document).ready(function(){
+	$("#send").click(function(){
+		
+		var email = $("#userAuth").val();
+		
+		$.get("http://localhost:7001/revblogs/bindUser?u=" + email, function(response){
+			
+			if(response === "Success"){
+				
+				$("#form").submit();
+				
+			} else {
+				
+				e.preventDefault();
+			}
+		});
+	});
+});
+</script>
+<script type="text/javascript">
 function validateForm(){
 	
 	var element = document.querySelector("loginForm");
-	
-	
-	
+
 	var username = document.forms["loginForm"]["username"].value;
 	var password = document.forms["loginForm"]["password"].value;
 	var userError = document.getElementById("userMsg");

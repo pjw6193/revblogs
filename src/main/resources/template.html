@@ -8,11 +8,11 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
+<meta property="og:url" content="http://http://blogs.pjw6193.tech/" />
 <meta property="og:type"content="article" />
 <meta property="og:title"content="Different" />
-<meta property="og:description"content="this is only a testkhjkgkjhgkj" />
-<meta property="og:image"content="http://weknowyourdreams.com/images/cheese/cheese-03.jpg" />
+<meta property="og:description"content="this is only a test" />
+<meta property="og:image"content="https://s3-us-west-2.amazonaws.com/dan-pickles-jar/content/resources/img/rev-brand.png" />
 <meta property="og:image:width" content="450" />
 <meta property="og:image:height" content="298" />
 <meta property="fb:app_id" content="1070815552954243"/>
@@ -21,7 +21,31 @@
     api_key:   77nvk5bz7r4mwj
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-
+<!-- Javascript SDK for FB Comments -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=139998182166";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<style>
+	.btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+	.btn-facebook{color:#fff;background-color:#3b5998;border-color:rgba(0,0,0,0.2)}.btn-facebook:focus,.btn-facebook.focus{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}
+	.btn-facebook:hover{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}
+	.btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}.btn-facebook:active:hover,.btn-facebook.active:hover,.open>.dropdown-toggle.btn-facebook:hover,.btn-facebook:active:focus,.btn-facebook.active:focus,.open>.dropdown-toggle.btn-facebook:focus,.btn-facebook:active.focus,.btn-facebook.active.focus,.open>.dropdown-toggle.btn-facebook.focus{color:#fff;background-color:#23345a;border-color:rgba(0,0,0,0.2)}
+	.btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{background-image:none}
+	.btn-facebook.disabled,.btn-facebook[disabled],fieldset[disabled] .btn-facebook,.btn-facebook.disabled:hover,.btn-facebook[disabled]:hover,fieldset[disabled] .btn-facebook:hover,.btn-facebook.disabled:focus,.btn-facebook[disabled]:focus,fieldset[disabled] .btn-facebook:focus,.btn-facebook.disabled.focus,.btn-facebook[disabled].focus,fieldset[disabled] .btn-facebook.focus,.btn-facebook.disabled:active,.btn-facebook[disabled]:active,fieldset[disabled] .btn-facebook:active,.btn-facebook.disabled.active,.btn-facebook[disabled].active,fieldset[disabled] .btn-facebook.active{background-color:#3b5998;border-color:rgba(0,0,0,0.2)}
+	.btn-facebook .badge{color:#3b5998;background-color:#fff}
+	.btn-linkedin{color:#fff;background-color:#007bb6;border-color:rgba(0,0,0,0.2)}.btn-linkedin:focus,.btn-linkedin.focus{color:#fff;background-color:#005983;border-color:rgba(0,0,0,0.2)}
+	.btn-linkedin:hover{color:#fff;background-color:#005983;border-color:rgba(0,0,0,0.2)}
+	.btn-linkedin:active,.btn-linkedin.active,.open>.dropdown-toggle.btn-linkedin{color:#fff;background-color:#005983;border-color:rgba(0,0,0,0.2)}.btn-linkedin:active:hover,.btn-linkedin.active:hover,.open>.dropdown-toggle.btn-linkedin:hover,.btn-linkedin:active:focus,.btn-linkedin.active:focus,.open>.dropdown-toggle.btn-linkedin:focus,.btn-linkedin:active.focus,.btn-linkedin.active.focus,.open>.dropdown-toggle.btn-linkedin.focus{color:#fff;background-color:#00405f;border-color:rgba(0,0,0,0.2)}
+	.btn-linkedin:active,.btn-linkedin.active,.open>.dropdown-toggle.btn-linkedin{background-image:none}
+	.btn-linkedin.disabled,.btn-linkedin[disabled],fieldset[disabled] .btn-linkedin,.btn-linkedin.disabled:hover,.btn-linkedin[disabled]:hover,fieldset[disabled] .btn-linkedin:hover,.btn-linkedin.disabled:focus,.btn-linkedin[disabled]:focus,fieldset[disabled] .btn-linkedin:focus,.btn-linkedin.disabled.focus,.btn-linkedin[disabled].focus,fieldset[disabled] .btn-linkedin.focus,.btn-linkedin.disabled:active,.btn-linkedin[disabled]:active,fieldset[disabled] .btn-linkedin:active,.btn-linkedin.disabled.active,.btn-linkedin[disabled].active,fieldset[disabled] .btn-linkedin.active{background-color:#007bb6;border-color:rgba(0,0,0,0.2)}
+	.btn-linkedin .badge{color:#007bb6;background-color:#fff}
+</style>
 </head>
 
 <body>
@@ -98,7 +122,16 @@
             </div>
           </div>
         </div>
-
+				<div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Modify Blog</h3>
+          </div>
+          <div class="panel-body">
+                   <div>Modification Options:</div>
+                   <a class="btn" id="edit">Edit</a>
+                   <a class="btn" id="delete">Delete</a>
+          </div>
+        </div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Share this post</h3>
@@ -126,6 +159,10 @@
           </div>
         </div>
       </div>
+      <div>
+  			<!-- Facebook Comments Code, the data-href must point to the website the page will be on -->
+			<div class="fb-comments" data-href="http://dev.pjw6193:7001/pages/create-blog.jsp" data-numposts="5"></div>
+			</div>
     </div>
   </div>
   <div class="footer">
@@ -149,7 +186,6 @@
       });
       $(document).mousemove(function(e) {
         mouseY = e.clientY;
-        console.log(mouseY);
       });
       setInterval(function () {
         if (mouseY <= 70) {

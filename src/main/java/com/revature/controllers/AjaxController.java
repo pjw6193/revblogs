@@ -4,11 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.revature.beans.User;
 import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
+import com.revature.service.impl.CryptImpl;
 
 @Controller
 @RequestMapping("/api")
@@ -19,11 +22,9 @@ public class AjaxController {
 	public BusinessDelegate getBusinessDelegate() {
 		return businessDelegate;
 	}
-
 	public void setBusinessDelegate(BusinessDelegate businessDelegate) {
 		this.businessDelegate = businessDelegate;
 	}
-	
 	
 	@RequestMapping(value="/posts")
 	@ResponseBody
@@ -36,5 +37,4 @@ public class AjaxController {
 		
 		return businessDelegate.requestBlogPosts(page, perPage);
 	}
-	
 }

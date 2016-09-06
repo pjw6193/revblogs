@@ -19,12 +19,12 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String role = auth.getAuthorities().toString();
-		String targetUrl = "";
+		String targetUrl;
 		
-		if(role.equalsIgnoreCase("[ADMIN]")){
+		if("[ADMIN]".equalsIgnoreCase(role)){
 			targetUrl = "/admin";
 		}
-		else if(role.equalsIgnoreCase("[CONTRIBUTOR]")){
+		else if("[CONTRIBUTOR]".equalsIgnoreCase(role)){
 			targetUrl= "/contributor";
 		}
 		else{

@@ -22,15 +22,19 @@ public interface DataService {
 	public void makeRecord(Object obj);
 	public void changeRecord(Object obj);
 	
-	// Pull
-	public User grabUsers(String username);
+	// Pull 1
+	public User grabUsers(String email);
 	public String grabProperty(PropertyType type);
+	public UserRoles grabRoles(String role);
 	
+	// Pull All
 	public List<User> grabUsers();
 	public List<Blog> grabBlogs();
 	public List<Tags> grabTags();
 	public List<UserRoles> grabRoles();
 	public List<Evidence> grabEvidence();
+	
+	// Pagination
 	public PaginatedResultList<Blog> grabBlogs(int start, int max);
 	public List<Blog> grabBlogs(User author, int start, int max);
 	public List<Blog> grabBlogs(Tags category, int start, int max);

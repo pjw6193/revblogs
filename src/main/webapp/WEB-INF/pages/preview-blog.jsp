@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>Revature Blog</title>
@@ -10,6 +11,10 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- HEADERS NEEDED TO PREVENT BACK BUTTON ON LOGOUT. DO NOT REMOVE ME! -->
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 <meta property="og:url" content="http://dev.pjw6193:7001/pages/create-blog.jsp" />
 <meta property="og:type"content="article" />
 <meta property="og:title"content="Different" />
@@ -20,10 +25,10 @@
 <meta property="fb:app_id" content="1070815552954243"/>
 <!-- LinkedIn Authenticator Token -->
 <script src="//platform.linkedin.com/in.js">
-    api_key:   77nvk5bz7r4mwj
+    api_key:   77nvk5bz7r4mwj;
 </script>
 <script src="https://use.fontawesome.com/ebec39e24e.js"></script>
-
+<link href="resources/css/bootstrap-social.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,11 +61,11 @@
             </h3>
           </div>
           <div class="post-body">
-          	<c:out value="${blog.staticContent}" escapeXml="false"></c:out>
+          	<c:out value="${blog.blogContent}" escapeXml="false"></c:out>
           </div>
-          <form action="/edit">
+          <form:form action="edit.do">
           	<button type="submit">Edit</button>
-          </form>
+          </form:form>
           <form action="publish.do" method="post">
           	<button type="submit">Publish</button>
           </form>

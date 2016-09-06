@@ -9,6 +9,20 @@
 	
 	<context:component-scan base-package="com.revature.controllers" />
 	<mvc:annotation-driven />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*"/>
+				<bean id="webContentInterceptor" 
+				class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+					<property name="cacheSeconds" value="0"></property>
+					<property name="useExpiresHeader" value="true"></property>
+					<property name="useCacheControlHeader" value="true"></property>
+					<property name="useCacheControlNoStore" value="true"></property>
+				</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/pages/" />

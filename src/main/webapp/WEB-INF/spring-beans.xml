@@ -14,6 +14,8 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 	<mvc:resources location="WEB-INF/resources/" mapping="resources/**"/>
+	
+	<aop:aspectj-autoproxy/>
 
 	<bean name="dataSource" 
 		class="org.apache.commons.dbcp.BasicDataSource">
@@ -33,6 +35,13 @@
 	<bean name="ajaxController" class="com.revature.controllers.AjaxController">
 		<property name="businessDelegate" ref="businessDelegate" />
 	</bean>
+	<bean name="postController" class="com.revature.controllers.PostController">
+		<property name="businessDelegate" ref="businessDelegate" />
+	</bean>
+	<bean name="getController" class="com.revature.controllers.GetController">
+		<property name="businessDelegate" ref="businessDelegate" />
+		<property name="logging" ref="logging" />
+	</bean>
 	<bean name="businessDelegate" class="com.revature.service.impl.BusinessDelegateImpl">
 		<property name="dataService" ref="dataService" />
 		<property name="serviceLocator" ref="serviceLocator" />
@@ -46,12 +55,17 @@
 	</bean>
 	<bean name="population" class="com.revature.service.Population">
 		<property name="delegate" ref="businessDelegate" />
+		<property name="logger" ref="logging" />
 	</bean>
 	<bean name="jetS3" class="com.revature.service.impl.JetS3Impl">
 		<property name="businessDelegate" ref="businessDelegate" />
+<!-- 		<property name="logging" ref="logging" /> -->
+	</bean>
+	<bean id="cryptImpl" class="com.revature.service.impl.CryptImpl">
+		<property name="businessDelegate" ref="businessDelegate"/>
+		<property name="getController" ref="getController"/>
 	</bean>
 	
-		
 	<tx:annotation-driven />
 
 	<bean name="transactionManager" 

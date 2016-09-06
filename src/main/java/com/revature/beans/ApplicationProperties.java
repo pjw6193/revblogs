@@ -7,29 +7,38 @@ import javax.persistence.*;
 public class ApplicationProperties {
 	
 	@Id
-	@Column(name="COMPANY", unique=true)
+	@Column(name="PROPERTY_COMPANY")
 	private String company;
 	
-	@Column(name="APP", unique=true)
+	@Column(name="PROPERTY_APP", unique=true, nullable=false)
 	private String app;
 	
-	@Column(name="S3", unique=true)
+	@Column(name="PROPERTY_S3", unique=true, nullable=false)
 	private String s3;
 	
-	@Column(name="SERVER", unique=true)
+	@Column(name="PROPERTY_SERVER", unique=true, nullable=false)
 	private String server;
 	
-	@Column(name="JENKINS", unique=true)
+	@Column(name="PROPERTY_JENKINS", unique=true, nullable=false)
 	private String jenkins;
 	
-	@Column(name="SONARQUBE", unique=true)
+	@Column(name="PROPERTY_SONARQUBE", unique=true, nullable=false)
 	private String sonarqube;
 	
-	@Column(name="K", unique=true)
+	@Column(name="PROPERTY_K", unique=true, nullable=false)
 	private String k;
 	
-	@Column(name="V", unique=true)
+	@Column(name="PROPERTY_V", unique=true, nullable=false)
 	private String v;
+	
+	@Column(name="PROPERTY_FAPP", unique=true, nullable=false)
+	private String fapp;
+	
+	@Column(name="PROPERTY_LINKTOKEN", unique=true, nullable=false)
+	private String linkToken;
+	
+	@Column(name="PROPERTY_S3BUCKET", unique=true, nullable=false)
+	private String bucketURL;
 	
 	/**
 	 *  Constructors
@@ -38,7 +47,7 @@ public class ApplicationProperties {
 		super();
 	}
 	public ApplicationProperties(String company, String app, String s3, String server, String jenkins, String sonarqube,
-			String k, String v) {
+			String k, String v, String fapp, String linkToken, String bucketURL) {
 		super();
 		this.company = company;
 		this.app = app;
@@ -48,6 +57,9 @@ public class ApplicationProperties {
 		this.sonarqube = sonarqube;
 		this.k = k;
 		this.v = v;
+		this.fapp = fapp;
+		this.linkToken = linkToken;
+		this.bucketURL = bucketURL;
 	}
 	
 	/**
@@ -101,7 +113,22 @@ public class ApplicationProperties {
 	public void setV(String v) {
 		this.v = v;
 	}
-	
-	
-
+	public String getFapp() {
+		return fapp;
+	}
+	public void setFapp(String fapp) {
+		this.fapp = fapp;
+	}
+	public String getLinkToken() {
+		return linkToken;
+	}
+	public void setLinkToken(String linkToken) {
+		this.linkToken = linkToken;
+	}
+	public String getBucketURL() {
+		return bucketURL;
+	}
+	public void setBucketURL(String bucketURL) {
+		this.bucketURL = bucketURL;
+	}
 }

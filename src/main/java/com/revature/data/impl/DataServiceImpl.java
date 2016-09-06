@@ -16,6 +16,10 @@ import com.revature.data.DataService;
 @Service
 public class DataServiceImpl implements DataService{
 
+	/*
+	 * 	Attributes && Getters/Setters
+	 * 
+	 */
 	private DAO dao;
 
 	public void setDao(DAO dao) {
@@ -25,7 +29,10 @@ public class DataServiceImpl implements DataService{
 		return dao.getSession();
 	}
 	
-	// Push
+	/*
+	 *  Database Altering Methods
+	 */
+	
 	public void makeRecord(Object obj){
 		dao.insertRecord(obj);
 	}
@@ -33,9 +40,15 @@ public class DataServiceImpl implements DataService{
 		dao.editRecord(obj);
 	}
 	
-	// Pull
-	public User grabUsers(String username){
-		return dao.getUsers(username);
+	/*
+	 *  Database Query Methods
+	 */
+	
+	public User grabUsers(String email){
+		return dao.getUsers(email);
+	}
+	public UserRoles grabRoles(String role) {
+		return dao.getRoles(role);
 	}
 	public String grabProperty(PropertyType type){
 		return dao.getProperty(type);
@@ -56,6 +69,10 @@ public class DataServiceImpl implements DataService{
 	public List<Evidence> grabEvidence(){
 		return dao.getEvidence();
 	}
+	
+	//-------------------------------------------------------------------------------------------------
+	// Pagination
+	
 	public PaginatedResultList<Blog> grabBlogs(int start, int max){
 		return dao.getBlogs(start, max);
 	}

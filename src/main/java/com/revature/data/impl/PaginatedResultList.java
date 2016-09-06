@@ -6,6 +6,14 @@ public class PaginatedResultList<T> {
 	
 	private List<T> items;
 	private long totalItems;
+	public PaginatedResultList() {
+		super();
+	}
+	public PaginatedResultList(List<T> items, int totalItems) {
+		super();
+		this.items = items;
+		this.totalItems = totalItems;
+	}
 	public List<T> getItems() {
 		return items;
 	}
@@ -18,15 +26,4 @@ public class PaginatedResultList<T> {
 	public void setTotalItems(long totalItems) {
 		this.totalItems = totalItems;
 	}
-	public PaginatedResultList(List<T> items, int totalItems) {
-		super();
-		this.items = items;
-		this.totalItems = totalItems;
-	}
-	public PaginatedResultList() {
-		super();
-	}
-	
-	
-	
 }

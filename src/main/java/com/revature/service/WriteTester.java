@@ -8,7 +8,6 @@ import com.revature.beans.User;
 
 public class WriteTester {
 	
-	private static Logging logging;
 	private static HtmlWriter testWriter;
 
 	private WriteTester(){
@@ -34,7 +33,8 @@ public class WriteTester {
 		try {
 			testWriter.render();
 		} catch (IOException e) {
-			logging.info(e);
+			
+			// Should be logged auto-magic-lly with AOP
 		}
 	}
 

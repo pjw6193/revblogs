@@ -37,9 +37,13 @@
 			        	<span class="glyphicon glyphicon-user"></span>
 			        	User <span class="caret"></span></a>
 			        	<ul class="dropdown-menu">
-			        		<li><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;New blog entry</a></li>
+			        		<li><a href="${pageContext.servletContext.contextPath}/contributor">Home</a></li>
 			        		<li role="separator" class="divider"></li>
-		            		<li><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
+			        		<li><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;New Blog Entry</a></li>
+			        		<li role="separator" class="divider"></li>
+			        		<li><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></li>
+			        		<li role="separator" class="divider"></li>
+		            		<li><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log Out</a></li>
 			        	</ul>
 			        </li>
 		        </c:when>
@@ -50,12 +54,13 @@
 			        	<span class="glyphicon glyphicon-user"></span>
 			        	Admin <span class="caret"></span></a>
 			        	<ul class="dropdown-menu">
-			        		<li><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;New blog entry</a></li>
+			        		<li><a href="${pageContext.servletContext.contextPath}/admin">Home</a></li>
 			        		<li role="separator" class="divider"></li>
-			        		<li><a href="#"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Manage entries</a></li>
-			        		<li><a href="#"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Manage Users</a></li>
+			        		<li><a href="${pageContext.servletContext.contextPath}/create-blog"><span class="glyphicon glyphicon-pencil"></span>&nbsp;New Blog Entry</a></li>
 			        		<li role="separator" class="divider"></li>
-		            		<li><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
+			        		<li><a href="${pageContext.servletContext.contextPath}/profile"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Update profile</a></li>
+			        		<li role="separator" class="divider"></li>
+		            		<li><a href="${pageContext.servletContext.contextPath}/go-logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log Out</a></li>
 			        	</ul>
 			        </li>
 		        </c:when>

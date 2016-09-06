@@ -10,7 +10,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 <link href="resources/css/main.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+<script src="resources/js/angular.min.js"></script>
 <script src="resources/js/app.js"></script>
 <script src="resources/js/controllers/BlogIndexController.js"></script>
 
@@ -63,26 +63,23 @@
   		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</option>
   		<option ng-model="postsPerPage"  ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</option>
   	</select>
-  	<!-- <a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" href="#here" ng-click="getPage(curPage)">10</a>
-  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]" href="#here" ng-click="getPage(curPage)">25</a>
-  	<a ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 50]" href="#here" ng-click="getPage(curPage)">50</a> -->
   </div>
   
   
   <!-- PAGINATION -->
   <nav id="pageNumsNav" aria-label="...">
-  	<div ng-controller="BlogIndexController">
+  	<div>
   	<ul id="pageNums" class="pagination">
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1]"><a ng-click="changeView(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-      <!-- <li ng:class="{true:'active', false:''}[number == curPage]"><a ng-click="getPage(1)">1 <span class="sr-only">(current)</span></a></li> -->
- 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages"> <a ng-click="getPage(number)">{{number}}</a> </li>    
-    	<!-- <li><a ng-click="getPage('{{$index}}')">{{$index}}</a></li> -->
-   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages]"><a ng-click="changeView(1)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == 1 || isLoading]" ng-click="changeView(0)"><a id="previous" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+ 		<li ng:class="{true:'active', false:''}[number == curPage]" ng-repeat="number in numOfPages" ng-if="number > 0"> <a ng-click="getPage(number)">{{number}}</a> </li>
+   	  <li ng:class="{true:'disabled', false:'enabled'}[curPage == numOfPages || isLoading]" ng-click="changeView(1)"><a id="next" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
   	</ul>
   	</div>
   </nav>
   <!-- PAGINATION -->
   </div>
+  
+  <span>{{isLoading}}</span>
   
   <jsp:include page="footer.jsp"></jsp:include>
   

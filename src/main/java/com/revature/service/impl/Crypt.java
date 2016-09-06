@@ -6,22 +6,30 @@ public class Crypt {
 		throw new IllegalAccessError("Utility class");
 	}
 	
-	// Encryption 
-	public  static String encrypt(String password, String username, String email){
+	/**
+	 * 
+	 *  This method encrypts the target with the keys.
+	 *  
+	 * @param target = The string you want encrypted.
+	 * @param key1   = The keyword you want the target to cipher against. (Don't pass in the target again!)
+	 * @param key2   = The keyword used to vary the output when similiar targets and keywords are utilized.
+	 * @return       = Returns the encryped target.
+	 */
+	public static String encrypt(String target, String key1, String key2){
 		
-		String temp = password;
+		String temp = target;
 		
-		for(int i = 0; i < email.length(); i++){
+		for(int i = 0; i < key2.length(); i++){
 			
-			temp = encrypt(temp, username);
+			temp = encrypt(temp, key1);
 		}
 		
 		return temp;
 	}
-	private static String encrypt(String password, String username){
+	private static String encrypt(String target, String keyword){
 		
-		char[] tempPassword = password.toCharArray();
-		char[] tempUsername = username.toCharArray();
+		char[] tempPassword = target.toCharArray();
+		char[] tempUsername = keyword.toCharArray();
 		char[] tempResult = new char[tempPassword.length];
 		
 		 //Alphabets
@@ -80,7 +88,7 @@ public class Crypt {
 	private static char cipherLetter(char[] alpha1, char[] alpha2, char letter, int keyIndex, char[] keyword){
 		
 		//Use a new constructor or use as is below
-    //Setting to 0 then reassigning is a waste of resources
+		//Setting to 0 then reassigning is a waste of resources
 		int cipherLetter;
 		int indexLetter = 0;
 		int indexKey = 0;
@@ -183,21 +191,21 @@ public class Crypt {
 	}
 	
 	// Decryption
-	public  static String decrypt(String password, String username, String email){
+	public  static String decrypt(String target, String key1, String key2){
 		
-		String temp = password;
+		String temp = target;
 		
-		for(int i = 0; i < email.length(); i++){
+		for(int i = 0; i < key2.length(); i++){
 		
-			temp = decrypt(temp, username);
+			temp = decrypt(temp, key1);
 		}
 		
 		return temp;
 	}
-	private static String decrypt(String password, String username){
+	private static String decrypt(String target, String keyword){
 		
-		char[] tempPassword = password.toCharArray();
-		char[] tempUsername = username.toCharArray();
+		char[] tempPassword = target.toCharArray();
+		char[] tempUsername = keyword.toCharArray();
 		char[] tempResult = new char[tempPassword.length];
 		
 		 //Alphabets
