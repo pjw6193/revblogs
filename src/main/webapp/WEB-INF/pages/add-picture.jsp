@@ -14,10 +14,10 @@ visibility: hidden;
 </head>
 <body>
 <div class="container page-content">
-<!-- 	<form method="POST" action="upload-picture" enctype="multipart/form-data"> -->
+	<form method="POST" action="upload-picture" enctype="multipart/form-data">
 		<input type="file" name="file" id="fileChooser" /><br />
 		<input type="submit" id= "upload" name="upload" value="Upload" />
-<!-- 	</form> -->
+	</form>
 </div>
 <img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
 
