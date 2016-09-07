@@ -41,13 +41,13 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			]
 		}
 	
-	$scope.numOfPages = [];
+/*	$scope.numOfPages = [];
 	var totalPages = 10;
 	
 	for (var i = 0; i < totalPages; i++) 
 	{
 		$scope.numOfPages[i] = i+1		
-	}
+	}*/
 	
 	$scope.getPage = function(page, postsPP)
 	{
@@ -75,10 +75,11 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				}
 				
 				$scope.numOfPages = [];
+				$scope.numOfPages[0] = 1;
 				
 				for (var i = 1; i < $scope.posts.total_pages; i++)
 				{
-					$scope.numOfPages[i] = i;
+					$scope.numOfPages[i - 1] = i;
 				}
 				
 				if($scope.curPage < $scope.posts.total_pages)
@@ -98,10 +99,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	
 	$scope.changeView = function(direction)
 	{
-		if($scope.isLoading)
-		{
-			console.log("HEY! I'm loading!");
-		}
+		if($scope.isLoading)	{console.log("HEY! I'm loading!");}
 		
 		else
 		{
@@ -110,27 +108,29 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			console.log($scope.curPage);
 			if(direction == 1)
 			{
-				$scope.posts = $scope.nextPagePosts;
-				$scope.curPage = $scope.curPage + 1;
+				if($scope.curPage == $scope.posts.total_pages)		{}
 				
-				console.log("Forward direction, curPage = " + $scope.curPage);
-				
-				$scope.isLoading = true;
-				console.log("Loading? " + $scope.isLoading);
-				
-				preloadPage($scope.curPage - 1, $scope.postsPerPage);
-				preloadPage($scope.curPage + 1, $scope.postsPerPage);
+				else
+				{
+					$scope.posts = $scope.nextPagePosts;
+					$scope.curPage = $scope.curPage + 1;
+					
+					console.log("Forward direction, curPage = " + $scope.curPage);
+					
+					$scope.isLoading = true;
+					console.log("Loading? " + $scope.isLoading);
+					
+					preloadPage($scope.curPage - 1, $scope.postsPerPage);
+					preloadPage($scope.curPage + 1, $scope.postsPerPage);
 
-				//$anchorScroll($('#postsDiv'));
-		        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
+					//$anchorScroll($('#postsDiv'));
+			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
+				}
 			}
 			
 			else
 			{
-				if($scope.curPage == 1)
-				{
-					
-				}
+				if($scope.curPage == 1)	{}
 				
 				else
 				{
