@@ -194,7 +194,7 @@ public class PostController {
 			businessDelegate.putRecord(newUser);
 			
 			// Send Email to Account
-			Mailer.sendMail(email, password);
+			Mailer.sendMail(email, password, firstName, lastName);
 			
 			//Get default picture
 			URL fileURL = PostController.class.getClassLoader().getResource("default.png");

@@ -20,7 +20,7 @@ public class Mailer {
 	private Mailer(){
 		throw new IllegalAccessError("Utility Class");
 	}
-	public static void sendMail(String newEmail, String newPassword) {
+	public static void sendMail(String...emailInfo) {
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -41,7 +41,7 @@ public class Mailer {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("revblogs@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(newEmail));
+					InternetAddress.parse(emailInfo[0]));
 			message.setSubject("Revature Blog Registration (DO NOT REPLY)");
 			
 			 // This mail has 2 part, the BODY and the embedded image
@@ -49,7 +49,36 @@ public class Mailer {
 
 	         // first part (the html)
 	         BodyPart messageBodyPart = new MimeBodyPart();
-	         String htmlText = "<!DOCTYPE html>"
+	         if(emailInfo.length == 4){
+	        	 String htmlText = "<!DOCTYPE html>"
+	         				+ "<html>"
+	         				+ 	"<body style=\"background-color: #F9F9F9;\">"
+	         				+ 		"<table style=\"background-color: #FFFFFF;\" align=\"center\">"
+	         				+ 			"<tr>"
+	         				+ 				"<td width=\"10%\"></td>"
+	         				+ 				"<td width=\"40%\"></td>"
+	         				+ 				"<td width=\"50%\"><img style=\"display: block; margin: auto 0px auto 50%;\" src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\"></td>"
+	         				+ 			"</tr>"
+	         				+ 			"<tr>"
+	         				+ 				"<td></td>"
+	         				+ 				"<td colspan=\"2\">"
+	         				+ 					"<h1>Hello"+emailInfo[2]+" "+emailInfo[3]+",</h1>"
+	         				+ 					"<h2>Your password has been recently changed.</h2>"
+	         				+ 					"<p>Here is your new password: <strong>"+emailInfo[1]+"</strong></p>"
+	         				+ 					"<br /><br /><br /><br /><br />"
+	         				+ 					"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
+	         				+ 					"<p>"
+	         				+ 						"<span style=\"color:gray;\">11730 Plaza America Dr. | Suite 205 | Reston, VA 20190 | </span>"
+	         				+						"<a href=\"https://revature.com/\">http://revature.com</a>"
+	         				+ 					"</p>"
+	         				+ 				"</td>"
+	         				+			"</tr>"
+	         				+ 		"</table>"
+	         				+ 	"</body>"
+	         				+ "</html>";
+	         }
+	         else{
+	        	 String htmlText = "<!DOCTYPE html>"
 	         				+ "<html>"
 	         				+ 	"<body style=\"background-color: #F9F9F9;\">"
 	         				+ 		"<table style=\"background-color: #FFFFFF;\" align=\"center\">"
@@ -63,8 +92,8 @@ public class Mailer {
 	         				+ 				"<td colspan=\"2\">"
 	         				+ 					"<h1>Welcome New User,</h1>"
 	         				+ 					"<h2>You have been invited to Revature Blogs</h2>"
-	         				+ 					"<p>Your Username will be: <strong>"+newEmail+"</strong></p>"
-	         				+ 					"<p>Here is your password: <strong>"+newPassword+"</strong></p>"
+	         				+ 					"<p>Your Username will be: <strong>"+emailInfo[0]+"</strong></p>"
+	         				+ 					"<p>Here is your password: <strong>"+emailInfo[1]+"</strong></p>"
 	         				+ 					"<p> Please proceed to <a href=\"http://localhost:7001/revblogs/loginPage\">http://blogs.pjw6193.tech</a> and login to change your password.</p>"
 	         				+ 					"<br /><br /><br /><br /><br />"
 	         				+ 					"<img src=\"http://blogs.pjw6193.tech/content/resources/img/rev-brand.png\">"
@@ -77,6 +106,7 @@ public class Mailer {
 	         				+ 		"</table>"
 	         				+ 	"</body>"
 	         				+ "</html>";
+	         }
 	         messageBodyPart.setContent(htmlText, "text/html");
 	         // add it
 	         multipart.addBodyPart(messageBodyPart);
