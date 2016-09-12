@@ -43,16 +43,19 @@
 
 <form:form action="add-blog.do" method="post" commandName="blog">
 	<h3>Title</h3>
-	<form:input path="blogTitle" /><br />
+	<form:input name="ngTitle" ng-model="ngTitle" required path="blogTitle" />
+<%-- 	<span class="validateHint" ng-show="ngTitle == null || ngTitle.length <= 0">A title is required!</span> --%>
+	<br />
 	<h4>Subtitle</h4>
-	<form:input path="blogSubtitle"/><br />
+	<form:input name="ngSubtitle" ng-model="ngSubtitle" path="blogSubtitle"/><br />
 	<br>
 	<form:textarea path="blogContent" rows="30" cols="100"></form:textarea>
 	<br>
 	<br />
+	References:
 	<c:forEach varStatus="vs" items="${blog.references}">
 		<div id="ref${vs.index}" style="display: none;">
-			[${vs.index+1}] - <form:input path="references[${vs.index}]"></form:input><br />
+			[${vs.index+1}] - <form:input path="references[${vs.index}]"></form:input>
 		</div>
 	</c:forEach>
 	<button id="addRefButton" type="button" ng-click="revealReference()">Add Another Reference</button>
@@ -66,8 +69,9 @@
  	Apply tags (separated by commas):
  	<br>
 	<form:input path="blogTagsString" id="tagList" style="resize:none;width:300px;"></form:input>
-	<br>
-	<input type="submit" value="Preview" />
+	<br />
+	<span ng-show="ngTitle == null || ngTitle.length <= 0 || ngSubtitle == null || ngSubtitle.length <= 0"><br />Please provide a title and subtitle to proceed.</span>
+	<input ng-show="ngTitle != null && ngTitle.length > 0 && ngSubtitle != null && ngSubtitle.length > 0" type="submit" value="Preview" />
 	<br/>
 </form:form>
 <br/>
