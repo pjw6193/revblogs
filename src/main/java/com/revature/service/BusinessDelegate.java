@@ -53,6 +53,8 @@ public interface BusinessDelegate {
 	
 	public String uploadProfileItem(String loginName, String fileName, File file);
 	
+	public String uploadProfileItem(String folderPath, String fileName);
+	
 	public String uploadProfileItem(String loginName, File file);
 	
 	public String uploadInitial(File file);
