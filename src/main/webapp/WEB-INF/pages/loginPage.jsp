@@ -85,7 +85,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	const HOST = "dev.pjw6193.tech";
+	const HOST = "localhost";
 	
 	$("#send").click(function(){
 	

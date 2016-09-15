@@ -65,9 +65,8 @@
 			<tbody>
 				<c:forEach items="${userList}" var="user">
 					<tr id="${user.userId}" onclick=grabId(this.id)>
-						<td id="proPic">
-						<!--  data-toggle="modal" data-target="#confirmPictureMod" Default profile picture cannot be reset right now. -->
-							<button id="picButton${user.userId}" name="resetProfile" value="${user.userId}" disabled>
+						<td id="proPic${user.userId}">
+							<button id="picButton${user.userId}" class="hideButton" name="resetProfile" value="${user.userId} data-toggle="modal" data-target="#confirmPictureMod"">
 								<img src="${user.profilePicture}" width="100" height="100" alt="profile picture" />
 							</button>
 						</td>
@@ -276,10 +275,32 @@
 	
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
-<script>
-$(document).ready(function() {
+<script type="text/javascript">
+$(document).ready(function(){
+
+	function edit(userId){
 	
-	const HOST = "dev.pjw6193.tech"
+		$("#selectedUserId").val($("#userId" + userId).html());
+		$("#selectedUserEmail").val($("#email" + userId).html());
+		$("#selectedUserFirst").val($("#firstName" + userId).html());
+		$("#selectedUserLast").val($("#lastName" + userId).html());
+		$("#selectedUserJob").val($("#job" + userId).html());
+		$("#selectedUserDesc").val($("#description" + userId).html());
+		$("#selectedUserPassword").val($("#password" + userId).html());
+		$("#selectedLinkedInURL").val($("#link" + userId).html());
+	}
+	
+	function grabId(userId){
+		
+		var currentUserId = userId;
+		
+		$("#confirmPassword").attr("value", currentUserId);
+		$("#confirmActivate").attr("value", currentUserId);
+		$("#confirmDeactivate").attr("value", currentUserId);
+		$("#confirmPicture").attr("value", currentUserId);
+	}
+
+	const HOST = "localhost";
 	
 	$("#loading").hide();
 	$('#loadingManage').hide();
@@ -344,29 +365,7 @@ $(document).ready(function() {
 			location.reload();
 		});
 	});
-});	
-
-function grabId(userId){
-	
-	var currentUserId = userId;
-	
-	$("#confirmPassword").attr("value", currentUserId);
-	$("#confirmActivate").attr("value", currentUserId);
-	$("#confirmDeactivate").attr("value", currentUserId);
-	$("#confirmPicture").attr("value", currentUserId);
-}
-
-function edit(userId){
-	$("#selectedUserId").val($("#userId" + userId).html());
-	$("#selectedUserEmail").val($("#email" + userId).html());
-	$("#selectedUserFirst").val($("#firstName" + userId).html());
-	$("#selectedUserLast").val($("#lastName" + userId).html());
-	$("#selectedUserJob").val($("#job" + userId).html());
-	$("#selectedUserDesc").val($("#description" + userId).html());
-	$("#selectedUserPassword").val($("#password" + userId).html());
-	$("#selectedLinkedInURL").val($("#link" + userId).html());
-	
-}	
+});
 </script>
-<!-- <script type="text/javascript" src="resources/js/ui.js"></script> -->
+<script type="text/javascript" src="resources/js/ui.js"></script>
 </html>

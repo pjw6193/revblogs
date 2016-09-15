@@ -83,19 +83,6 @@ public class PostController implements ServletContextAware {
 	@RequestMapping(value="populate.do", method=RequestMethod.GET)
 	public String buildDatabase(){
 	
-		
-
-		population.populateRoles();
-		
-		Session session = businessDelegate.requestSession();
-		Criteria crit = session.createCriteria(UserRoles.class).add(Restrictions.eq("role", "ADMIN"));
-		UserRoles role = (UserRoles) crit.uniqueResult();
-		User admin = new User("danpgdr@gmail.com", "danpickles1", "Dan", "Pickles", "Pickle Master", role);
-		
-		admin.setPassword(businessDelegate.maskElement(admin.getPassword(), admin.getEmail(), admin.getFullname()));
-		
-		businessDelegate.putRecord(admin);
-		
 		return null;
 	}
 	

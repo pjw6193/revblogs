@@ -263,7 +263,7 @@ html, body {
 	font-weight: bold;
 }
 
-#proPic {
+.hideButton {
 	background-color: transparent !important;
     background-repeat:no-repeat !important;
     border: none !important;
