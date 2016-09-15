@@ -32,11 +32,11 @@
 		<c:redirect url="/contributor"/>
 	</c:if>
 
-	<c:if test="${populate eq true}">
-		<div>
-			<button id="populateNow" class="btn btn-primary">Populate Database</button>
-		</div>
-	</c:if>
+<%-- 	<c:if test="${populate eq true}"> --%>
+<!-- 		<div> -->
+<!-- 			<button id="populateNow" class="btn btn-primary">Populate Database</button> -->
+<!-- 		</div> -->
+<%-- 	</c:if> --%>
 	<c:if test="${'fail' eq param.auth}">
 		<div>
               <h3 id="failLogin">Failed to login. Please try again.</h3>
