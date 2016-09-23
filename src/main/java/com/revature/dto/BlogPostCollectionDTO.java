@@ -2,6 +2,7 @@ package com.revature.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,6 +22,16 @@ public class BlogPostCollectionDTO {
 	String prev = null;
 	String next = null;
 	List<BlogPostDTO> posts = new ArrayList<>();
+	
+	public List<String> getSearchFills()
+	{
+		return searchFills;
+	}
+	public void setSearchFills(List<String> searchFills)
+	{
+		this.searchFills = searchFills;
+	}
+	List<String> searchFills = new ArrayList<>();
 	
 	AuthorDTO author = null;
 	String category = null;

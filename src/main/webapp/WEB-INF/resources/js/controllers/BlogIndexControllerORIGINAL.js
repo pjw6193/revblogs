@@ -145,18 +145,28 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
-		{				
-			$scope.isLoading = true;
-
-			if(direction >= 1 & $scope.curPage < $scope.posts.total_pages)
+		{
+			if(direction === 1)
 			{
-				$scope.curPage = $scope.curPage + direction;
+				if($scope.curPage < $scope.posts.total_pages)		
+				{
+					$scope.posts = $scope.nextPagePosts;
+					$scope.curPage = $scope.curPage + 1;
+					
+					$scope.isLoading = true;
+					
+					preloadPage($scope.curPage - 1, $scope.postsPerPage);
+					preloadPage($scope.curPage + 1, $scope.postsPerPage);
+
+			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+				}
 			}
 			
 			else
 			{
 				if($scope.curPage > 1)
 				{
+					$scope.posts = $scope.prevPagePosts;
 					$scope.curPage = $scope.curPage - 1;
 
 					$scope.isLoading = true;
@@ -167,32 +177,43 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
 				}
 			}
-			
-			preloadPage($scope.curPage - 1, $scope.postsPerPage);
-			preloadPage($scope.curPage + 1, $scope.postsPerPage);
-
-			var endPost = 0;
-		
-			for (var i = curPage*$scope.postsPerPage-1; i < $scope.posts.length; i++) 
-			{
-				$scope.displayPosts[i] = $scope.posts[curPage*$scope.postsPerPage+1];
-				endPost = i;
-			}
-
-			if (endPost-$scope.posts.length <= $scope.postsPerPage)
-			{
-				getPage(curPage+1);
-			}
-
-			else if (endPost-$scope.posts.length <= $scope.postsPerPage)
-			{
-				getPage(curPage-1);
-			}
-
-			$scope.isLoading = false;
-			window.scrollTo(0, $('#postsDiv').offsetTop + 100);
 		}
 	}
+	
+	function preloadPage(page, postsPP)
+	{
+		var fullUrl;
+		if($scope.author != null && $scope.author > 0){
+			fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + postsPP;
+		} else if($scope.category != null && $scope.category > 0){
+			fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + postsPP;
+		} else {
+			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + postsPP;
+		}
+		
+		$http.get(fullUrl).success(
+		    function(resp)
+			{
+				var prevPage = $scope.curPage;
+				var nextPage = $scope.curPage;
+				
+				if($scope.curPage > page)
+				{
+					$scope.prevPagePosts = resp;
+				}
+				
+				if($scope.curPage < page)
+				{
+					$scope.nextPagePosts = resp;
+					$scope.isLoading = false;
+				}
+			}
+		);
+	}	
+	
+	window.onbeforeunload = function (e) {
+        sessionStorage.clear();
+	};
 	
 	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
 	$scope.posts = {

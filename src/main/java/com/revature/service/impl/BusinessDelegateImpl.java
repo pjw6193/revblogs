@@ -2,7 +2,10 @@ package com.revature.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -243,6 +246,24 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		for (Blog p: results.getItems()) {
 			postList.add(new BlogPostDTO(p));
 		}
+		
+		Set<String> searchFill = new HashSet<>();
+		
+		for(int i = 0; i < postList.size(); i++)
+		{
+			searchFill.add(postList.get(i).getTitle().toUpperCase());
+			searchFill.add(postList.get(i).getSubtitle().toUpperCase());
+			searchFill.add(postList.get(i).getAuthor().getName().toUpperCase());
+			for (int j = 0; j < postList.get(i).getTags().size(); j++)
+			{
+				searchFill.add(postList.get(i).getTags().get(j).toUpperCase());
+			}
+		}
+		
+		searchFill.toArray();
+		List<String> sortedResults = new ArrayList<String>(searchFill);
+		Collections.sort(sortedResults);
+		
 		long totalItems = results.getTotalItems();
 		int totalPages = (int)Math.ceil((double)totalItems/perPage);
 		
@@ -251,6 +272,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		postCollection.setTotalPosts(totalItems);
 		postCollection.setTotalPages(totalPages);
 		postCollection.setPerPage(perPage);
+		postCollection.setSearchFills(sortedResults);
 		
 		return postCollection;
 	}

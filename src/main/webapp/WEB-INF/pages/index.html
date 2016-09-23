@@ -11,6 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/app.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/controllers/BlogIndexController.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
 
@@ -47,10 +49,10 @@
   		</div>
   	</div>
   	<div class="row">
-  		<div class="col-xs-12">
+  		<div class="col-xs-12"  ng-app="autocompleteApp">
   			<form>
-			  <div class="form-group input-group post-search">
-			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
+			  <div class="form-group input-group post-search" ng-controller="autocompleteController">
+			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search" ui-autocomplete="autocompleteOptions">
 			    <span class="input-group-btn">
 			      <button ng-click="getFilter()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 			    </span>
@@ -91,7 +93,7 @@
 	  	<select  ng-model="postsPerPage" ng-change="getPage(curPage, postsPerPage)">
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 5]">5</option>
 	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 10]" selected>10</option>
-	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 25]">25</option>
+	  		<option ng:class="{true:'disabled', false:'enabled'}[postsPerPage == 20]">20</option>
 	  	</select>
 	  </div>
 	  

@@ -1,35 +1,59 @@
-app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
+$( function() {
+  var availableTags = $scope.autofill;
+   $scope.searchQuery.autocomplete({
+   source: availableTags
+  });
+} );
+
+/*$scope.autocompleteOptions.autocomplete(
 {
+    search: function () {},
+    source: $scope.autofill,
+    minLength: 2
+});
+
+
+var autocompleteApp = angular.module("autocompleteApp");
+var autocompleteController = function($scope) {
+  //http://jqueryui.com/autocomplete/
+	var availableTags = $scope.autofill;
+	$scope.autocompleteOptions = {
+		source: availableTags
+	}
+};
+autocompleteApp.('ui.config', {
+    autocomplete: {
+        minLength: 2,
+        delay: 500
+    }
+});*/
+
+app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http) 
+{	
 	$scope.getFilter = function()
 	{
 		$('#postsDiv').css('visibility', 'hidden');
 		$("#loading").show();
 		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-		var fullUrl;
-		var ulQuery = $scope.searchQuery.toLowerCase();
-		$scope.savedQuery = $scope.searchQuery;
+		var fullUrl = $scope.appUrl;
 		
-		fullUrl = $scope.appUrl + "?page=1&per_page=10&q=" + 
+		if($scope.searchQuery != "")
+		{
+			var ulQuery = $scope.searchQuery.toLowerCase().replace('\s', '+');
+			$scope.savedQuery = $scope.searchQuery;
+			
+			fullUrl = $scope.appUrl + "&q=" + ulQuery;
+		}
 		
 		$http.get(fullUrl).success(
 			    function(resp)
 				{
 					$scope.searchPosts = resp;
 					
+					$scope.autofill = $scope.searchPosts.searchFills;
+					
 					$scope.curPage = page;  //current page
 					$scope.searchPage = true;
-					var prevPage = $scope.curPage;
-					var nextPage = $scope.curPage;
-					
-					if($scope.curPage > 1)
-					{
-						prevPage = $scope.curPage - 1;
-					}
-					
-					if($scope.curPage < $scope.searchPosts.total_pages)
-					{
-						nextPage = $scope.curPage + 1;
-					}
 					
 					$scope.numOfPages = [];
 					$scope.numOfPages[0] = 1;
@@ -38,16 +62,7 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 					{
 						$scope.numOfPages[i - 1] = i;
 					}
-					
-					if($scope.curPage < $scope.searchPosts.total_pages)
-					{
-						preloadPage(nextPage, $scope.postsPerPage);
-					}
-					
-					if($scope.curPage > 1)
-					{
-						preloadPage(prevPage, $scope.postsPerPage);
-					}
+
 					$('#postsDiv').load();
 					$("#loading").hide();
 					$('#postsDiv').css('visibility', 'visible');
@@ -84,18 +99,22 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 		$('#postsDiv').css('visibility', 'hidden');
 		$("#loading").show();
 		window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-		var fullUrl;
-		if($scope.author != null && $scope.author > 0){
-			fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + $scope.postsPerPage;
-		} else if($scope.category != null && sessionStorage.tag > 0){
-			fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + $scope.postsPerPage;
-		} else {
-			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + $scope.postsPerPage;
+		
+		if (page > 1) 
+		{
+			$scope.pageToGet = $scope.curPage - MAX_PP/$scope.postsPerPage;
+			
+			if($scope.pageToGet < 1) $scope.pageToGet = 1;
 		}
+		
+		
+		
 		$http.get(fullUrl).success(
 			    function(resp)
 				{
 					$scope.posts = resp;
+					
+					$scope.autofill = $scope.posts.searchFills;
 					
 					$scope.curPage = page;  //current page
 					$scope.searchPage = false;
@@ -120,15 +139,12 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 						$scope.numOfPages[i - 1] = i;
 					}
 					
-					if($scope.curPage < $scope.posts.total_pages)
+					for (var i = (curPage-1)*$scope.postsPerPage; i < $scope.posts.length; i++) 
 					{
-						preloadPage(nextPage, $scope.postsPerPage);
+						$scope.displayPosts[i] = $scope.posts[curPage*$scope.postsPerPage+i];
+						endPost = i;
 					}
 					
-					if($scope.curPage > 1)
-					{
-						preloadPage(prevPage, $scope.postsPerPage);
-					}
 					$('#postsDiv').load();
 					$("#loading").hide();
 					$('#postsDiv').css('visibility', 'visible');
@@ -145,77 +161,49 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 	$scope.changeView = function(direction)
 	{
 		if(!$scope.isLoading)	
-		{
-			if(direction === 1)
-			{
-				if($scope.curPage < $scope.posts.total_pages)		
-				{
-					$scope.posts = $scope.nextPagePosts;
-					$scope.curPage = $scope.curPage + 1;
-					
-					$scope.isLoading = true;
-					
-					preloadPage($scope.curPage - 1, $scope.postsPerPage);
-					preloadPage($scope.curPage + 1, $scope.postsPerPage);
+		{				
+			$scope.isLoading = true;
 
-			        window.scrollTo(0, $('#postsDiv').offsetTop + 100);
-				}
+			if(direction >= 1 & $scope.curPage < $scope.posts.total_pages)
+			{
+				$scope.curPage = $scope.curPage + direction;
 			}
 			
 			else
 			{
 				if($scope.curPage > 1)
 				{
-					$scope.posts = $scope.prevPagePosts;
 					$scope.curPage = $scope.curPage - 1;
+				}
+			}
+			
+			preloadPage($scope.curPage - 1, $scope.postsPerPage);
+			preloadPage($scope.curPage + 1, $scope.postsPerPage);
 
-					$scope.isLoading = true;
-					preloadPage($scope.curPage - 1, $scope.postsPerPage);
-					preloadPage($scope.curPage + 1, $scope.postsPerPage);
-					$scope.isLoading = false;
-					
-			        window.scrollTo(0, $('#postsDiv').offsetTop + 100)
-				}
-			}
-		}
-	}
-	
-	function preloadPage(page, postsPP)
-	{
-		var fullUrl;
-		if($scope.author != null && $scope.author > 0){
-			fullUrl = $scope.appUrl+"/api/posts?author=" + $scope.author + "&page=" + page + "&per_page=" + postsPP;
-		} else if($scope.category != null && $scope.category > 0){
-			fullUrl = $scope.appUrl+"/api/posts?category=" + $scope.category + "&page=" + page + "&per_page=" + postsPP;
-		} else {
-			fullUrl = $scope.appUrl+"/api/posts?page=" + page + "&per_page=" + postsPP;
-		}
+			var endPost = 0;
 		
-		$http.get(fullUrl).success(
-		    function(resp)
+			for (var i = (curPage-1)*$scope.postsPerPage; i < $scope.posts.length; i++) 
 			{
-				var prevPage = $scope.curPage;
-				var nextPage = $scope.curPage;
-				
-				if($scope.curPage > page)
-				{
-					$scope.prevPagePosts = resp;
-				}
-				
-				if($scope.curPage < page)
-				{
-					$scope.nextPagePosts = resp;
-					$scope.isLoading = false;
-				}
+				$scope.displayPosts[i] = $scope.posts[curPage*$scope.postsPerPage+i];
+				endPost = i;
 			}
-		);
-	}	
-	
-	window.onbeforeunload = function (e) {
-        sessionStorage.clear();
+
+			if (endPost-$scope.posts.length <= $scope.postsPerPage)
+			{
+				getPage(curPage+1);
+			}
+
+			else if (endPost <= $scope.postsPerPage)
+			{
+				getPage(curPage-1);
+			}
+
+			$scope.isLoading = false;
+			window.scrollTo(0, $('#postsDiv').offsetTop + 100);
+		}
 	};
 	
-	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs";
+	const MAX_PP = 20;
 	$scope.posts = {
 			page: 0,
 			prev: null,
@@ -238,13 +226,19 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 			per_page: 0,
 			total_posts: 0
 	};
+	$scope.autofill = [];
 	$scope.searchQuery = "";
 	$scope.savedQuery = "";
 	$scope.searchPage = false;
 	$scope.curPage = 1;
+	$scope.pageToGet = 1;
 	$scope.postsPerPage = 10;
 	$scope.isLoading = false;
 	$scope.author = 0;
 	$scope.category = sessionStorage.tag;
 	$scope.getPage($scope.curPage, $scope.postsPerPage);
+	$scope.appUrl = "https://dev.pjw6193.tech:7002/revblogs?page=" + $scope.pageToGet
+																					          + "&per_page=" + $scope.postsPerPage
+																					          + "&author=" + $scope.author 
+																					          + "&category=" + $scope.category;
 }]);
