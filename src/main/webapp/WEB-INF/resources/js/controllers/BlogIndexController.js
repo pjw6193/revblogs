@@ -39,24 +39,6 @@ app.controller("BlogIndexController", ["$scope", "$http", function($scope, $http
 				}
 			);
 		}
-		
-		/*$scope.searchPosts.posts = [];
-		var ulQuery = $scope.searchQuery.toLowerCase();
-		$scope.savedQuery = $scope.searchQuery;
-		$scope.searchPage = true;
-		for (var i = 0; i < $scope.posts.posts.length; i++) 
-		{
-			var ulTitle = $scope.posts.posts[i].title.toLowerCase();
-			var ulSubtitle = $scope.posts.posts[i].subtitle.toLowerCase();
-			var ulName = $scope.posts.posts[i].author.name.toLowerCase();
-			if (ulTitle.includes(ulQuery) || ulSubtitle.includes(ulQuery) || ulName.includes(ulQuery))
-			{
-				$scope.searchPosts.posts.push($scope.posts.posts[i]);
-			}
-		}
-		console.log($scope.searchPosts.posts);
-		return false;
-	}*/
 	
 	$scope.clearSearch = function()
 	{

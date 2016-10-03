@@ -62,11 +62,8 @@
   	<img id="loading" src="http://blogs.pjw6193.tech/content/resources/img/rev.gif" />
     <div id="postsDiv" class="row">
       <div class="col-sm-8">
-        <div ng-if="searchPage===true">
-        	<div ng-repeat="post in searchPosts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
-        </div>
-        <div ng-if="searchPage===false">                            <!-- PLEASE CHECK THIS!!! -->
-      		<div ng-repeat="post in posts.posts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
+        <div>         	                   <!-- PLEASE CHECK THIS!!! -->
+      		<div ng-repeat="post in displayPosts" ng-include src="'http://blogs.pjw6193.tech/content/resources/js/templates/post-preview.html'"></div>
         </div>
       </div>
       <div class="col-sm-4 hidden-xs">
