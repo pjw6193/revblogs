@@ -15,6 +15,8 @@ import com.revature.dto.BlogPostCollectionDTO;
 import com.revature.service.BusinessDelegate;
 import com.revature.service.Logging;
 
+//This is actually a REST controller.  Don't let the AJAX confuse you.
+
 @Controller
 @RequestMapping("/api")
 public class AjaxController {

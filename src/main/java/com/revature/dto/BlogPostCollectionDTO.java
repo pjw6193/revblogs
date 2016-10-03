@@ -22,6 +22,14 @@ public class BlogPostCollectionDTO {
 	String next = null;
 	List<BlogPostDTO> posts = new ArrayList<>();
 	
+	List<String> searchFills = new ArrayList<>();
+	
+	public List<String> getSearchFills() {
+		return searchFills;
+	}
+	public void setSearchFills(List<String> searchFills) {
+		this.searchFills = searchFills;
+	}
 	AuthorDTO author = null;
 	String category = null;
 	

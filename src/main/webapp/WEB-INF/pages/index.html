@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/app.js"></script>
 <script src="http://blogs.pjw6193.tech/content/resources/js/controllers/BlogIndexController.js"></script>
+<script src="http://blogs.pjw6193.tech/content/resources/js/controllers/ng-enhanced-search.js"></script>
 <link rel="shortcut icon" type="image/png" href="/content/resources/img/favicon.png"/>
 </head>
 
@@ -52,7 +53,7 @@
 			  <div class="form-group input-group post-search">
 			    <input ng-model="searchQuery" type="text" class="form-control" placeholder="Search">
 			    <span class="input-group-btn">
-			      <button ng-click="getFilter()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+			      <button ng-click="doSearch()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 			    </span>
 			  </div>
 			</form>
