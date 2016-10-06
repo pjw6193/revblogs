@@ -278,7 +278,7 @@ html, body {
 
 .suggestions {
 	z-index: 1;
-	position: fixed;
+	position: relative;
 	min-width: 50%;
 	max-width: 50%;
 }
