@@ -50,24 +50,30 @@
   	<div class="row">
   		<div class="col-xs-12">
   			<form>
-			  <div class="form-group input-group post-search">
-				<input id="searchBox" class="form-control" type="text" placeholder="Search"
-					ng-model="searchQuery"
-					ng-change="searchQueryChanged()"
-					ng-blur="searchLostFocus($event)"
-					ng-keyup="keyup($event)">
-				</input>
-				<br />
-				<select id="selections" class="form-control suggestions" size="6"
+			  <div class="form-group post-search">
+			    <div class="input-group">
+					<input id="searchBox" class="form-control" type="text" placeholder="Search"
+						ng-model="searchQuery"
+						ng-change="searchQueryChanged()"
+						ng-blur="searchLostFocus($event)"
+						ng-keyup="keyup($event)">
+					</input>
+					<span class="input-group-btn">
+					  <button ng-click="doSearch()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+					</span>
+				</div>
+				<div class="input-group">
+				  <select id="selections" size="6" class="form-control suggestions"
 					ng-model="selectedSuggestion"
 					ng-show="suggestionsShown"
-					ng-change="selectedSuggestionChanged()"
 					ng-blur="searchLostFocus($event)"
 					ng-options="suggestion.searchQuery as suggestion.displayText for suggestion in suggestions">
-				</select>
-				<span class="input-group-btn">
-			      <button ng-click="doSearch()" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-			    </span>
+				  </select>
+				  <!-- Hidden, non-functional copy of the above button to fix alignment of suggestions -->
+				  <span class="input-group-btn" style="visibility: hidden;">
+					  <button class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+				  </span>
+			    </div>
 			  </div>
 			</form>
   		</div>
@@ -153,5 +159,4 @@
 </body>
 
 <script type="text/javascript" src="http://blogs.pjw6193.tech/content/resources/js/ui.js"></script>
-
 </html>
